@@ -2,7 +2,11 @@
 import RPi.GPIO as GPIO
 import time
 import random
+from subprocess import Popen
 
+# SETTING
+lightButton = 0
+lightPin = 22
 # GPIO INITIALIZE
 GPIO.setmode(GPIO.BCM)
 
@@ -15,16 +19,59 @@ GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(26, GPIO.OUT)
 GPIO.setup(19, GPIO.OUT)
 GPIO.setup(13, GPIO.OUT)
+if lightButton == 1:
+    GPIO.setup(lightPin, GPIO.OUT)
+    GPIO.output(lightPin, GPIO.HIGH)
 
 # TURN OFF LEDS
-GPIO.output(26, GPIO.LOW)
-GPIO.output(19, GPIO.LOW)
-GPIO.output(13, GPIO.LOW)
+def offAll():
+    GPIO.output(26, GPIO.LOW)
+    GPIO.output(19, GPIO.LOW)
+    GPIO.output(13, GPIO.LOW)
+
+# Ensure all LEDS are off
+offAll()
 
 # Variables to keep track of state
 engine = 'var.engine'
 controlRoom = 'var.controlRoom'
 gun = 'var.gun'
+
+# Replace to zero
+def varZero():
+    wr = open(engine, 'w')
+    wr.write('0')
+    wr = open(controlRoom, 'w')
+    wr.write('0')
+    wr = open(gun, 'w')
+    wr.write('0')
+
+# Dance
+def dance():
+    offAll()
+    GPIO.output(26, GPIO.HIGH)
+    GPIO.output(13, GPIO.HIGH)
+    time.sleep(0.5)
+    GPIO.output(19, GPIO.HIGH)
+    GPIO.output(13, GPIO.LOW)
+    time.sleep(0.5)
+
+# Celebrate
+def celeberate():
+    offAll()
+    time.sleep(1)
+    GPIO.output(26, GPIO.HIGH)
+    time.sleep(1)
+    GPIO.output(19, GPIO.HIGH)
+    time.sleep(1)
+    GPIO.output(13, GPIO.HIGH)
+    time.sleep(1)
+    dance()
+    dance()
+    dance()
+    dance()
+    offAll()
+    varZero()
 
 # 90% success
 def chance90():
@@ -83,26 +130,47 @@ while True:
 
     if fire == False:
         hit = 0
+        weaponSEL = 0
         if blaster60 == False:
             print('Blaster 60 active')
             hit = chance60()
+            weaponSEL = 1
         elif blaster90 == False:
             print('Blaster 90 active')
             hit = chance90()
+            weaponSEL = 2
         if hit == 1:
             if targetControlRoom == False and targetEngine == False and gunHit() == '0':
                 print('Hit enemy Gun')
+                if weaponSEL == 1:
+                    Popen(['python', 'gun60.py'])
+                if weaponSEL == 2:
+                    Popen(['python', 'gun90.py'])
             elif targetControlRoom == False and controlHit() == '0':
                 print('Hit enemy Control Room')
+                if weaponSEL == 1:
+                    Popen(['python', 'cr60.py'])
+                if weaponSEL == 2:
+                    Popen(['python', 'cr90.py'])
             elif targetEngine == False and engineHit() == '0':
                 print('Hit enemy Engine')
+                if weaponSEL == 1:
+                    Popen(['python', 'eng60.py'])
+                if weaponSEL == 2:
+                    Popen(['python', 'eng90.py'])
             else:
                 print('No target selected')
             print('hit')
         else:
             print('miss')
-        print(winCheck())
-        time.sleep(5)
+        if winCheck() == 1:
+            celeberate()
+        if lightButton == 1:
+            GPIO.output(lightPin, GPIO.LOW)
+            time.sleep(5)
+            GPIO.output(lightPin, GPIO.HIGH)
+        else:    
+            time.sleep(5)
 
 
     
