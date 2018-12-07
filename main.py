@@ -132,7 +132,7 @@ while True:
     fire = GPIO.input(18)
 
     if fire == False:
-        celeberate()
+        
         hit = 0
         weaponSEL = 0
         if blaster60 == False:
@@ -170,6 +170,8 @@ while True:
 
         if lightButton == 1:
             GPIO.output(lightPin, GPIO.LOW)
+            print("win check")
+            print(winCheck)
             if winCheck() == 1:
                 celeberate()
             time.sleep(5)
