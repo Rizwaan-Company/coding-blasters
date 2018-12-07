@@ -71,7 +71,7 @@ while i < timeIntervals:
     i += 1
 
 if breakster == 0:
-    #GPIO.output(pin, GPIO.LOW)
+    GPIO.output(pin, GPIO.LOW)
     wr = open(stufff, 'w')
     wr.write('0')
     wr.close()
