@@ -53,9 +53,9 @@ def gunHit():
 
 def winCheck():
     if engineHit() == '1' and controlHit() == '1' and gunHit() == '1':
-        return 1
+        return True
     else:
-        return 0
+        return False
 
 
 timeIntervals = 0
@@ -71,7 +71,7 @@ GPIO.output(pin, GPIO.HIGH)
 print(gunHit())
 while i < timeIntervals:
     time.sleep(0.5)
-    if winCheck() == 1:
+    if winCheck() == True:
         breakster = 1
         break
     print(i)

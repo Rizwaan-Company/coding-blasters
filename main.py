@@ -116,9 +116,9 @@ def gunHit():
 # Check if game has been won
 def winCheck():
     if engineHit() == '1' and controlHit() == '1' and gunHit() == '1':
-        return 1
+        return True
     else:
-        return 0
+        return False
 # Celeberate once game has been ended
 
 # MAIN LOOP
@@ -172,7 +172,7 @@ while True:
             GPIO.output(lightPin, GPIO.LOW)
             print("win check")
             print(winCheck)
-            if winCheck() == 1:
+            if winCheck() == True:
                 celeberate()
             time.sleep(5)
             GPIO.output(lightPin, GPIO.HIGH)
