@@ -177,7 +177,7 @@ while True:
         if lightButton == 1:
             GPIO.output(lightPin, GPIO.LOW)
             print("win check")
-            print(winCheck)
+            print(winCheck())
             if winCheck() == True:
                 celeberate()
             time.sleep(5)
