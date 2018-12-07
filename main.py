@@ -132,7 +132,7 @@ while True:
     fire = GPIO.input(18)
 
     if fire == False:
-        celebrate()
+        celeberate()
         hit = 0
         weaponSEL = 0
         if blaster60 == False:
