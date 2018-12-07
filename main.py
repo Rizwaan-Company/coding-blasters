@@ -41,10 +41,13 @@ gun = 'var.gun'
 def varZero():
     wr = open(engine, 'w')
     wr.write('0')
+    wr.close()
     wr = open(controlRoom, 'w')
     wr.write('0')
+    wr.close()
     wr = open(gun, 'w')
     wr.write('0')
+    wr.close()
 
 # Dance
 def dance():

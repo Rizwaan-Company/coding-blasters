@@ -1,5 +1,6 @@
 import time
 import RPi.GPIO as GPIO
+GPIO.setmode(GPIO.BCM)
 engine = 'var.engine'
 controlRoom = 'var.controlRoom'
 gun = 'var.gun'
