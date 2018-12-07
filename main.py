@@ -144,6 +144,12 @@ while True:
             hit = chance90()
             weaponSEL = 2
         if hit == 1:
+            print('gun ')
+            print(gunHit())
+            print('cr ')
+            print(controlHit())
+            print('eng ')
+            print(engineHit())
             if targetControlRoom == False and targetEngine == False and gunHit() == '0':
                 print('Hit enemy Gun')
                 if weaponSEL == 1:
