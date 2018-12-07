@@ -5,7 +5,7 @@ import random
 from subprocess import Popen
 
 # SETTING
-lightButton = 0
+lightButton = 1
 lightPin = 22
 # GPIO INITIALIZE
 GPIO.setmode(GPIO.BCM)
